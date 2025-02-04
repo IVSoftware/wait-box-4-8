@@ -35,9 +35,10 @@ namespace click_anywhere_event_4_8
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(478, 244);
+            this.ClientSize = new System.Drawing.Size(578, 344);
             this.Name = "MainForm";
             this.Padding = new System.Windows.Forms.Padding(10);
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Main Form";
             this.ResumeLayout(false);
 

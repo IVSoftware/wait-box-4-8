@@ -26,6 +26,8 @@ namespace click_anywhere_event_4_8
                 splash.ShowDialog();
             }
             _initialized = true;
+            WindowState = FormWindowState.Normal;
+            Show();
         }
     }
 }

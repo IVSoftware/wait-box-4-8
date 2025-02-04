@@ -26,6 +26,8 @@ public partial class MainForm : Form
             splash.ShowDialog();
         }
         _initialized = true;
+        WindowState = FormWindowState.Normal;
+        Show();
     }
 }
 ```
