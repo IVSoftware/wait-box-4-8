@@ -1,11 +1,11 @@
-The key to making this scheme behave is to make sure `MainForm.Handle` is the _first_ window created. Ordinarily, this happens when the form is shown. But in this case, we show the `WaitBox` (and its asynchronous `ProgressBar`) first. Here's how to pull this off:
+The key to making this scheme behave is to make sure `MainForm.Handle` is the _first_ window created. Ordinarily, the `Handle` is when the form is shown. But in this case, we want to show the `WaitBox` (and its asynchronous `ProgressBar`) first. Here's one way to make this work:
 
 1. Force the main for window creation using `_ = Handle;`
 2. Override `SetVisibleCore` and prevent `MainForm` from becoming visible until we're ready for it.
 3. Using `BeginInvoke`, post a message at the tail of the message queue to show the wait box.
 
 ___
-
+```
 public partial class MainForm : Form
 {
     public MainForm()
@@ -28,9 +28,12 @@ public partial class MainForm : Form
         _initialized = true;
     }
 }
+```
 ___
 **WaitBox Example**
 
+
+[![wait box][1]][1]
 ```
 public partial class WaitBox : Form
 {
@@ -65,3 +68,6 @@ public partial class WaitBox : Form
     }
 }
 ```
+
+
+  [1]: https://i.sstatic.net/pzW5kcSf.png
