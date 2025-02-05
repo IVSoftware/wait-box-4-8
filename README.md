@@ -12,21 +12,23 @@ public partial class MainForm : Form
     {
         InitializeComponent();
         _ = Handle;
-        BeginInvoke(new Action(() => execSplashFlow()));
+        BeginInvoke(new Action(() => ConnectToService()));
+        // Setup the DataGridView
+        Load += (sender, e) => dataGridView.DataSource = Responses;
     }
     protected override void SetVisibleCore(bool value) =>
         base.SetVisibleCore(value && _initialized);
-
     bool _initialized = false;
 
-    private void execSplashFlow()
+    IList Responses { get; } = new BindingList<ReceivedHttpResponseEventArgs>();
+    private void ConnectToService()
     {
-        using (var splash = new WaitBox())
+        using (var waitBox = new WaitBox())
         {
-            splash.ShowDialog();
+            waitBox.ResponseReceived += (sender, e) => Responses.Add(e);
+            waitBox.ShowDialog();
         }
         _initialized = true;
-        WindowState = FormWindowState.Normal;
         Show();
     }
 }
