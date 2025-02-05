@@ -34,7 +34,7 @@ public partial class MainForm : Form
 ___
 **WaitBox Minimal Example**
 
-This demo uses the https://catfact.ninja/facts API as a stand-in for _"**an async method that connects to a service and retrieves some data**"_. The received "facts" are used to populate the data source of a `DataGridView`.
+This demo uses the https://catfact.ninja API as a stand-in for _"**an async method that connects to a service and retrieves some data**"_. The received "facts" are used to populate the data source of a `DataGridView`.
 
 [![wait box and main view][1]][1]
 
