@@ -1,4 +1,4 @@
-The key to making this scheme behave is to make sure `MainForm.Handle` is the _first_ window created. Ordinarily, the `Handle` is when the form is shown. But in this case, we want to show the `WaitBox` (and its asynchronous `ProgressBar`) first. Here's one way to make this work:
+The key to making this scheme behave is to make sure `MainForm.Handle` is the _first_ window created. Ordinarily, the `Handle` is created when the form is shown. But in this case, we want to show the `WaitBox` (and its asynchronous `ProgressBar`) first. Here's one way to make this work:
 
 1. Force the main for window creation using `_ = Handle;`
 2. Override `SetVisibleCore` and prevent `MainForm` from becoming visible until we're ready for it.
@@ -34,11 +34,14 @@ public partial class MainForm : Form
 ___
 **WaitBox Minimal Example**
 
-This demo uses the https://catfact.ninja/facts API as a stand-in for _"an async method that connects to a service and retrieves some data"_. The received "facts" are used to populate the data source of a `DataGridView`.
+This demo uses the https://catfact.ninja/facts API as a stand-in for _"**an async method that connects to a service and retrieves some data**"_. The received "facts" are used to populate the data source of a `DataGridView`.
 
+[![wait box and main view][1]][1]
+
+___
 
 ```
- public partial class WaitBox : Form
+public partial class WaitBox : Form
 {
     public WaitBox()
     {
@@ -105,3 +108,6 @@ public class ReceivedHttpResponseEventArgs : EventArgs
     public string Fact { get; set; }
 }
 ```
+
+
+  [1]: https://i.sstatic.net/bmvo9olU.png
