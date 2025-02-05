@@ -20,6 +20,8 @@ namespace app_with_login
             InitializeComponent();
             StartPosition = FormStartPosition.CenterScreen;
             FormBorderStyle = FormBorderStyle.None;
+            progressBar.Style = ProgressBarStyle.Marquee;
+            progressBar.MarqueeAnimationSpeed = 50; 
         }
         protected async override void OnVisibleChanged(EventArgs e)
         {
@@ -27,16 +29,11 @@ namespace app_with_login
             if (Visible)
             {
                 labelProgress.Text = "Connecting to service...";
-                progressBar.Value = 5;
-
                 // Includes some cosmetic delay for demo purposes
                 for (int i = 0; i < 10; i++)
                 {
+                    await Task.Delay(TimeSpan.FromSeconds(1));
                     labelProgress.Text = await GetCatFactAsync();
-                    await Task.Delay(TimeSpan.FromSeconds(0.5));
-                    progressBar.Value = Math.Min(100, progressBar.Value + 5);
-                    await Task.Delay(TimeSpan.FromSeconds(0.5));
-                    progressBar.Value = Math.Min(100, progressBar.Value + 5);
                 }
                 DialogResult = DialogResult.OK;
             }

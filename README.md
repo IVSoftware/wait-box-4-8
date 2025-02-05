@@ -1,7 +1,7 @@
-The key to making this scheme behave is to make sure `MainForm.Handle` is the _first_ window created. Ordinarily, the `Handle` is created when the form is shown. But in this case, we want to show the `WaitBox` (and its asynchronous `ProgressBar`) first. Here's one way to make this work:
+The key to making this scheme behave is to make sure `MainForm.Handle` is the _first_ window created (because the OS typically considers the first visible top-level window to be the primary UI window for the process). Ordinarily, the `Handle` is created when the form is shown. But in this case, we want to show the `WaitBox` (and its asynchronous `ProgressBar`) first. Here's one way to make this work:
 
 1. Force the main for window creation using `_ = Handle;`
-2. Override `SetVisibleCore` and prevent `MainForm` from becoming visible until we're ready for it.
+2. Override `SetVisibleCore` and prevent `MainForm` from becoming visible until we're ready.
 3. Using `BeginInvoke`, post a message at the tail of the message queue to show the wait box.
 
 ___
@@ -25,7 +25,13 @@ public partial class MainForm : Form
     {
         using (var waitBox = new WaitBox())
         {
-            waitBox.ResponseReceived += (sender, e) => Responses.Add(e);
+            waitBox.ResponseReceived += (sender, e) =>    
+            {
+                Debug.Assert(
+                !InvokeRequired, 
+                "Expecting that we are ALREADY ON the UI thread");
+                Responses.Add(e);
+            };
             waitBox.ShowDialog();
         }
         _initialized = true;
@@ -38,7 +44,8 @@ ___
 
 This demo uses the https://catfact.ninja API as a stand-in for _"**an async method that connects to a service and retrieves some data**"_. The received "facts" are used to populate the data source of a `DataGridView`.
 
-[![wait box and main view][1]][1]
+
+[![wait box and main view][2]][2]
 
 ___
 
@@ -50,6 +57,8 @@ public partial class WaitBox : Form
         InitializeComponent();
         StartPosition = FormStartPosition.CenterScreen;
         FormBorderStyle = FormBorderStyle.None;
+        progressBar.Style = ProgressBarStyle.Marquee;
+        progressBar.MarqueeAnimationSpeed = 50; 
     }
     protected async override void OnVisibleChanged(EventArgs e)
     {
@@ -57,16 +66,12 @@ public partial class WaitBox : Form
         if (Visible)
         {
             labelProgress.Text = "Connecting to service...";
-            progressBar.Value = 5;
 
             // Includes some cosmetic delay for demo purposes
             for (int i = 0; i < 10; i++)
             {
                 labelProgress.Text = await GetCatFactAsync();
-                await Task.Delay(TimeSpan.FromSeconds(0.5));
-                progressBar.Value = Math.Min(100, progressBar.Value + 5);
-                await Task.Delay(TimeSpan.FromSeconds(0.5));
-                progressBar.Value = Math.Min(100, progressBar.Value + 5);
+                await Task.Delay(TimeSpan.FromSeconds(1));
             }
             DialogResult = DialogResult.OK;
         }
@@ -111,5 +116,4 @@ public class ReceivedHttpResponseEventArgs : EventArgs
 }
 ```
 
-
-  [1]: https://i.sstatic.net/bmvo9olU.png
+  [2]: https://i.sstatic.net/vT36g8mo.png

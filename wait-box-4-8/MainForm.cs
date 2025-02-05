@@ -28,7 +28,11 @@ namespace wait_box_4_8
         {
             using (var waitBox = new WaitBox())
             {
-                waitBox.ResponseReceived += (sender, e) => Responses.Add(e);
+                waitBox.ResponseReceived += (sender, e) =>
+                {
+                    Debug.Assert(!InvokeRequired, "Expecting that we are ALREADY ON the UI thread");
+                    Responses.Add(e);
+                };
                 waitBox.ShowDialog();
             }
             _initialized = true;
