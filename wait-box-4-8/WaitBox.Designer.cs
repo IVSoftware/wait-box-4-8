@@ -37,41 +37,41 @@ namespace app_with_login
             // progressBar
             // 
             this.progressBar.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.progressBar.Location = new System.Drawing.Point(0, 311);
+            this.progressBar.Location = new System.Drawing.Point(0, 249);
+            this.progressBar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(500, 39);
+            this.progressBar.Size = new System.Drawing.Size(450, 31);
             this.progressBar.TabIndex = 0;
             // 
             // labelProgress
             // 
-            this.labelProgress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelProgress.AutoSize = true;
             this.labelProgress.BackColor = System.Drawing.Color.Transparent;
-            this.labelProgress.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.labelProgress.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.labelProgress.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.labelProgress.ForeColor = System.Drawing.Color.White;
-            this.labelProgress.Location = new System.Drawing.Point(98, 224);
+            this.labelProgress.Location = new System.Drawing.Point(0, 153);
             this.labelProgress.Name = "labelProgress";
-            this.labelProgress.Size = new System.Drawing.Size(97, 30);
+            this.labelProgress.Padding = new System.Windows.Forms.Padding(10, 5, 10, 5);
+            this.labelProgress.Size = new System.Drawing.Size(450, 96);
             this.labelProgress.TabIndex = 1;
             this.labelProgress.Text = "Progress";
             // 
-            // SplashForm
+            // WaitBox
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(500, 350);
+            this.ClientSize = new System.Drawing.Size(450, 280);
             this.Controls.Add(this.labelProgress);
             this.Controls.Add(this.progressBar);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "SplashForm";
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Name = "WaitBox";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login";
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

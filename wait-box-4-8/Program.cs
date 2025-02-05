@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace click_anywhere_event_4_8
+namespace wait_box_4_8
 {
     static class Program
     {

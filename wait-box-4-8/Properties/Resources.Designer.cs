@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 
 
-namespace click_anywhere_event_4_8.Properties
+namespace wait_box_4_8.Properties
 {
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.

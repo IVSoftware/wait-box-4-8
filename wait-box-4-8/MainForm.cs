@@ -1,10 +1,13 @@
 ﻿using app_with_login;
 using System;
+using System.Collections;
+using System.ComponentModel;
+using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace click_anywhere_event_4_8
+namespace wait_box_4_8
 {
     public partial class MainForm : Form
     {
@@ -12,21 +15,23 @@ namespace click_anywhere_event_4_8
         {
             InitializeComponent();
             _ = Handle;
-            BeginInvoke(new Action(() => execSplashFlow()));
+            BeginInvoke(new Action(() => ConnectToService()));
+            // Setup the DataGridView
+            Load += (sender, e) => dataGridView.DataSource = Responses;
         }
         protected override void SetVisibleCore(bool value) =>
             base.SetVisibleCore(value && _initialized);
-
         bool _initialized = false;
 
-        private void execSplashFlow()
+        IList Responses { get; } = new BindingList<ReceivedHttpResponseEventArgs>();
+        private void ConnectToService()
         {
-            using (var splash = new WaitBox())
+            using (var waitBox = new WaitBox())
             {
-                splash.ShowDialog();
+                waitBox.ResponseReceived += (sender, e) => Responses.Add(e);
+                waitBox.ShowDialog();
             }
             _initialized = true;
-            WindowState = FormWindowState.Normal;
             Show();
         }
     }
